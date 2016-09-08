@@ -6,12 +6,17 @@ def parse(filePath):
     
     with open(filePath) as f:
         print "read file"
-        f.readline() # read first line (containing info)
+        line = f.readline() # read first line (containing info)
         cnt = 0
-        for line in f.readlines():
+        
+        while True:
+            line = f.readline().strip()
+            if line == '':
+                break
+            
             try:
                 cnt += 1
-                tokens = line.strip().split(',')
+                tokens = line.split(',')
                 
                 # validity check
                 if len(tokens[5:]) != 65536:
