@@ -1,4 +1,5 @@
 import numpy as np
+LARGENUM = 100000000
 
 def parse(filePath):
     print("started")
@@ -43,7 +44,7 @@ def cal_freq(cntList):
     freqList = []
 	
     for item in cntList:
-	freqList.append(item/total)
+	freqList.append(int((LARGENUM * item)/total))
 
     return freqList
 ### END - def cal_freq
