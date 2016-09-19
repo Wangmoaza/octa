@@ -1,17 +1,15 @@
-import numpy as np
 LARGENUM = 100000000
 
 def parse(filePath):
     print("started")
-    octa_freq = [] # shape: (n_samples, 4^8)
     
-    with open(filePath) as f:
+    with open(filePath, "r") as fr:
         print "read file"
-        line = f.readline() # read first line (containing info)
+        line = fr.readline() # read first line (containing info)
         cnt = 0
         
         while True:
-            line = f.readline().strip()
+            line = fr.readline().strip()
             if line == '':
                 break
             
@@ -24,8 +22,9 @@ def parse(filePath):
                     continue
                 
                 octa = [int(i) for i in tokens[5:]]
-                octa_freq.append(cal_freq(octa))
-                
+                octa_freq = cal_freq(octa)
+                write2file(octa_freq)
+
                 if cnt % 1000 == 0:
                     print cnt 
             ### END - try
@@ -35,9 +34,19 @@ def parse(filePath):
         ### END - for line
     ### END - with
 
-    np.save("db3_octa_freq", octa_freq)
     print("fininsed")
 ### END - def parse
+
+def write2file(octa_freq):
+    with open("db3_octa_freq.csv", "a") as fw:
+        string = ""
+        for freq in octa_freq:
+            string += str(freq) + ','
+
+        string = string[:-1] + '\n'
+        fw.write(string)
+    ### END - with open
+### END - def write2file
 
 def cal_freq(cntList):
     total = sum(cntList)
